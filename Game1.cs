@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using jigsawprototype.TechnicalLibraries;
 using jigsawprototype.Content;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace jigsawprototype
 {
@@ -14,6 +15,8 @@ namespace jigsawprototype
 
         public static int ScreenWidth = 1600;
         public static int ScreenHeight = 900;
+
+        public static Task loadingTask;
 
         public Game1()
         {
@@ -46,10 +49,8 @@ namespace jigsawprototype
             ScreenHeight = Window.ClientBounds.Height;
             ScreenWidth = Window.ClientBounds.Width;
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
+            if (!FirstLoad.isLoaded)
+                FirstLoad.Update(GraphicsDevice);
 
             base.Update(gameTime);
         }
