@@ -13,13 +13,23 @@ namespace jigsawprototype.TechnicalLibraries
         public static byte frame = 0;
         public static byte frameoffset = 0;
         public static byte framefade = 0;
+        public static byte presskeymessage = 0;
 
 
         public static void Update(GraphicsDevice gDevice)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (phase > 3 && Game1.loadingTask.Status.Equals(TaskStatus.RanToCompletion))
             {
-                phase = 4; frame = 0;
+                if (Keyboard.GetState().GetPressedKeyCount() != 0)
+                {
+                    isLoaded = true;
+                    MainMenu.isMenu = true;
+                }
+            }
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && phase < 3)
+            {
+                phase = 3; frame = 0;
             }
 
             if (Game1.loadingTask == null)
@@ -60,7 +70,7 @@ namespace jigsawprototype.TechnicalLibraries
                     if (++frameoffset == 3)
                     { frame++; frameoffset = 0; }
                     if (frame == 6*7)
-                    { phase = 4; frame = 0; }
+                    { phase++; frame = 0; }
                     break;
             }
 
@@ -72,12 +82,21 @@ namespace jigsawprototype.TechnicalLibraries
                                                                                        + GameContent.systemFont.MeasureString("Powered by ").X, Game1.ScreenHeight / 2 + 10), new Color(197, 190, 130));
             }
 
-            if (phase == 4 && Game1.loadingTask.Status.Equals(TaskStatus.RanToCompletion) && frame > 6*7 - 2)
+            if (phase > 3 && Game1.loadingTask.Status.Equals(TaskStatus.RanToCompletion))
             {
-                isLoaded = true;
+                presskeymessage++;
+                if (presskeymessage < 50)
+                {
+                    string aux = "Press any key to continue.";
+                    sBatch.DrawString(GameContent.systemFont, aux, new Vector2(Game1.ScreenWidth / 2f - GameContent.systemFont.MeasureString(aux).X / 2,
+                                                                               Game1.ScreenHeight / 1.05f - GameContent.systemFont.MeasureString(aux).Y), Color.Magenta);
+                }
+
+                if (presskeymessage == 100)
+                    presskeymessage = 0;
             }
 
-            if (phase == 4)
+            if (phase == 3 || !Game1.loadingTask.Status.Equals(TaskStatus.RanToCompletion))
             {
                 string aux = "Loading";
                 if (frame < 7 * 6 * 1/4) aux += "";

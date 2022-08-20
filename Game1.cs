@@ -52,15 +52,25 @@ namespace jigsawprototype
             if (!FirstLoad.isLoaded)
                 FirstLoad.Update(GraphicsDevice);
 
+            if (MainMenu.isMenu)
+                MainMenu.Update();
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
             if (!FirstLoad.isLoaded)
+            {
+                GraphicsDevice.Clear(Color.Black);
                 FirstLoad.Draw(sBatch);
+            }
+
+            else if (MainMenu.isMenu)
+            {
+                GraphicsDevice.Clear(new Color(127, 54, 73));
+                MainMenu.Draw(sBatch);
+            }
 
             base.Draw(gameTime);
         }

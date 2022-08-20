@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace jigsawprototype.TechnicalLibraries
 {
@@ -72,6 +71,10 @@ namespace jigsawprototype.TechnicalLibraries
                     if (lines[i * 2][j] == '0')
                         aux.diff_cleared[j] = false;
                     else aux.diff_cleared[j] = true;
+
+                // also init mm_texture
+
+                importedPuzzles.Add(aux);
             }
         }
     }
@@ -79,6 +82,7 @@ namespace jigsawprototype.TechnicalLibraries
     class Jigsaw
     {
         public Texture2D texture;
+        public Texture2D mm_texture;
         public string filepath;
         public bool[] diff_cleared;
 

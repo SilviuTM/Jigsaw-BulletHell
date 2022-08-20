@@ -10,6 +10,9 @@ namespace jigsawprototype.Content
         public static Texture2D shapeintro2;
         public static Texture2D shapey;
         public static Texture2D blank;
+
+        public static Texture2D import;
+
         public static SpriteFont systemFont;
         ///
 
@@ -20,6 +23,9 @@ namespace jigsawprototype.Content
             shapeintro2 = Content.Load<Texture2D>("shapey-nimate2");
             shapey = Content.Load<Texture2D>("shapey");
             blank = Content.Load<Texture2D>("blank");
+
+            import = Content.Load<Texture2D>("import");
+
             systemFont = Content.Load<SpriteFont>("SystemFont");
             ///
         }
